@@ -28,12 +28,12 @@ module Geokit
 
         provider_order.each do |provider|
           begin
-            if provider.to_s == 'google3'
-              provider_text = 'GoogleGeocoder3'
+            if provider.to_s == "google3"
+              provider_text = "GoogleGeocoder3"
             else
-              provider_text = "#{camelize(provider.to_s)}Geocoder"
+              provider_text = "#{Geokit::Inflector::camelize(provider.to_s)}Geocoder"
             end
-            klass = Geokit::Geocoders.const_get "#{Geokit::Inflector::provider_text}"
+            klass = Geokit::Geocoders.const_get "#{provider_text}"
             res = klass.send :geocode, address, options
             return res if res.success?
           rescue => e
